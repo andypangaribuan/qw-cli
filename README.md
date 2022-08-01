@@ -10,7 +10,9 @@ _Cross-platform enhanced CLI tools for your daily needs_
 ## Installing
 
 ```shell
-dart bin/qw_cli.dart
+curl -L https://github.com/andypangaribuan/qw-cli/releases/download/v1.0.0/qw -o qw
+chmod +x qw
+mv qw /usr/local/bin
 ```
 
 ## Build
@@ -22,6 +24,10 @@ dart bin/qw_cli.dart
 ```
 
 ## Usage
+
+```shell
+qw
+```
 
 ## License
 
