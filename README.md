@@ -12,7 +12,7 @@ Cross-platform enhanced CLI tools for your daily needs
 ## Installing
 
 ```shell
-curl -L https://github.com/andypangaribuan/qw-cli/releases/download/v1.0.1/qw -o qw
+curl -L https://github.com/andypangaribuan/qw-cli/releases/download/v1.0.2/qw -o qw
 chmod +x qw
 mv qw /usr/local/bin
 ```
