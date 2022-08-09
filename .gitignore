@@ -12,8 +12,8 @@ build/
 
 # Jetbrains IDE
 .idea/*
-!.idea/dictionaries/
-!.idea/copyright/
+!.idea/dictionaries
+!.idea/copyright
 
 # Miscellaneous
 .DS_Store

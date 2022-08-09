@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2022.
+ * Created by Andy Pangaribuan. All Rights Reserved.
+ *
+ * This product is protected by copyright and distributed under
+ * licenses restricting copying, distribution and decompilation.
+ */
+
 import 'package:dcli/dcli.dart' show ask;
 
 void printEmpty() {
@@ -15,12 +23,20 @@ String grepIncludeHeader(String key) {
   return ' | (read line; echo "\$line"; grep $key)';
 }
 
-String requiredArg(String arg, {required String info, required String msg}) {
+String requiredArg(String arg, {String info = '', required String msg}) {
   if (arg.isEmpty) {
-    print(info);
+    if (info.isNotEmpty) {
+      print(info);
+    }
     arg = ask(msg).trim();
     printEmpty();
   }
   
   return arg;
+}
+
+void printLines(List<String> lines) {
+  for (var line in lines) {
+    print(line);
+  }
 }

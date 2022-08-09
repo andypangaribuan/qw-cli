@@ -12,7 +12,7 @@ Cross-platform enhanced CLI tools for your daily needs
 ## Installing
 
 ```shell
-curl -L https://github.com/andypangaribuan/qw-cli/releases/download/v1.0.0/qw -o qw
+curl -L https://github.com/andypangaribuan/qw-cli/releases/download/v1.0.1/qw -o qw
 chmod +x qw
 mv qw /usr/local/bin
 ```
@@ -30,6 +30,10 @@ dart bin/qw_cli.dart
 ```shell
 qw
 ```
+
+Features:
+- docker > image | ps
+- workbench > psql-convert
 
 ## License
 
