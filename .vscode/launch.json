@@ -10,7 +10,7 @@
             "type": "dart",
             "program": "${workspaceFolder}/bin/qw_cli.dart",
             "console": "debugConsole",
-            "args": ["docker", "ps", "*"]
+            "args": ["docker", "ps", "ok", "*", "--show"]
         }
     ]
 }

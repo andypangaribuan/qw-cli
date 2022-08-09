@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Copyright (c) 2022.
+# Created by Andy Pangaribuan. All Rights Reserved.
+#
+# This product is protected by copyright and distributed under
+# licenses restricting copying, distribution and decompilation.
+
+shopt -s expand_aliases
+source ~/.aliases.zsh
+
+# make executable: $ chmod +x .taskfile
+# make alias:
+# - $ subl ~/.zshrc
+# - add line: alias task="./.taskfile"
+# run with $ task
+
+function help {
+  echo "✦ run"
+  echo "✦ build"
+}
+
+function run {
+    dart run bin/main.dart $@
+}
+
+function build {
+    dart compile exe bin/main.dart -o out/qw
+}
+
+# ___ do not change ___
+case $1 in
+	"") help ;;
+	*) "$@" ;;
+esac

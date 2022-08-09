@@ -1,11 +1,13 @@
 <!--
-$ dart create qw-cli
-$ brew info dart
+pubspec.yaml
+dev_dependencies:
+  # dtg:
+    # path: /Users/apangaribuan/repo/github/dtg
 -->
 
 # QW CLI
 
-_Cross-platform enhanced CLI tools for your daily needs_
+Cross-platform enhanced CLI tools for your daily needs
 
 ## Installing
 
