@@ -17,7 +17,7 @@ class WorkbenchCommand {
       printCommandNotFound();
     }
     dg.print.table([
-      ['workbench', '▶', 'psql-convert {path-to-sql-file} [--save]'],
+      ['workbench', '▶', 'psql-convert {path-to-sql-file} [--save | --drop-table]'],
     ]);
   }
 
@@ -35,27 +35,23 @@ class WorkbenchCommand {
     lines = _transformTableColumn(lines);
     lines = _beautifier(lines);
 
-    switch (ar.opt1) {
-      case '':
-        printLines(lines);
-        break;
-      case '--save':
-        var filename = file.path.split(io.Platform.pathSeparator).last;
-        if (filename.length > 4 && filename.substring(filename.length-4).toLowerCase() == '.sql') {
-          filename = '${filename.substring(0, filename.length-4)}_p.sql';
-        } else {
-          filename += '_p.sql';
-        }
-        final dir = file.parent.path + io.Platform.pathSeparator;
-        final savedFilepath = dir + filename;
 
-        var f = io.File(savedFilepath);
-        if (!(await f.exists())) {
-          await f.create();
-        }
-
-        await f.writeAsString(lines.join('\n'));
+    if (ar.opt('--drop-table')) {
+      lines = _getDropTable(lines);
+      if (ar.opt('--save')) {
+        final savedFilepath = await _saveToFile(sqlFilePath, lines);
         print('saved file: $savedFilepath');
+      } else {
+        printLines(lines);
+      }
+      return;
+    }
+
+    if (ar.opt('--save')) {
+      final savedFilepath = await _saveToFile(sqlFilePath, lines);
+      print('saved file: $savedFilepath');
+    } else {
+      printLines(lines);
     }
   }
 
@@ -318,5 +314,41 @@ class WorkbenchCommand {
     }
 
     return newLines;
+  }
+
+  List<String> _getDropTable(List<String> lines) {
+    final newLines = <String>[];
+
+    for (int i=lines.length-1; i>=0; i--) {
+      final line = lines[i];
+      final l = line.trim().toLowerCase();
+      final ls = l.length;
+
+      if (ls > 20 && l.substring(0, 20) == 'drop table if exists') {
+        newLines.add(line);
+      }
+    }
+
+    return newLines;
+  }
+
+  Future<String> _saveToFile(String sqlFilePath, List<String> lines) async {
+    final file = io.File(sqlFilePath);
+    var filename = file.path.split(io.Platform.pathSeparator).last;
+    if (filename.length > 4 && filename.substring(filename.length-4).toLowerCase() == '.sql') {
+      filename = '${filename.substring(0, filename.length-4)}_p.sql';
+    } else {
+      filename += '_p.sql';
+    }
+    final dir = file.parent.path + io.Platform.pathSeparator;
+    final savedFilepath = dir + filename;
+
+    var f = io.File(savedFilepath);
+    if (!(await f.exists())) {
+    await f.create();
+    }
+
+    await f.writeAsString(lines.join('\n'));
+    return savedFilepath;
   }
 }

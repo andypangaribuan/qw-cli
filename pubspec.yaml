@@ -11,6 +11,6 @@ dev_dependencies:
   dcli: ^1.33.0
   yaml: ^3.1.1
 
-  dtg: ^1.0.1
-  # dtg:
-    # path: /Users/apangaribuan/repo/github/dtg
+  dtg: ^1.0.2
+#  dtg:
+#   path: /Users/apangaribuan/repo/github/dtg
