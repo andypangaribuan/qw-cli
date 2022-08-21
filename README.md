@@ -36,6 +36,9 @@ dart compile exe bin/main.dart -o out/qw
 Using docker
 
 ```shell
+git clone https://github.com/andypangaribuan/qw-cli.git
+cd qw-cli
+
 docker run --rm -it dart:2.17.6 bash
 
 # on host
