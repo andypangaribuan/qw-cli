@@ -12,7 +12,7 @@ import 'func.dart';
 
 class DockerCommand {
 
-  final _infoPrintAll = 'Enter * to print all';
+  final _infoPrintAll = 'Enter . to print all';
 
   void help(Args ar) {
     if (ar.arg1.isNotEmpty) {
@@ -27,7 +27,7 @@ class DockerCommand {
   void image(Args ar) async {
     final imageName = requiredArg(ar.arg1, info: _infoPrintAll, msg: 'Enter image name: ');
     var command = 'docker images';
-    if (imageName != '*') {
+    if (imageName != '.') {
       command += grepIncludeHeader(imageName);
     }
 
@@ -40,7 +40,7 @@ class DockerCommand {
   void ps(Args ar) async {
     final containerName = requiredArg(ar.arg1, info: _infoPrintAll, msg: 'Enter container name: ');
     var command = 'docker ps -a';
-    if (containerName != '*') {
+    if (containerName != '.') {
       command += grepIncludeHeader(containerName);
     }
 
