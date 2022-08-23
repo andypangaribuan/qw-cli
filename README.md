@@ -12,7 +12,7 @@ Cross-platform enhanced CLI tools for your daily needs
 ## Installing
 
 ```shell
-$ curl -L https://github.com/andypangaribuan/qw-cli/releases/download/v1.0.2/qw-darwin-arm64 -o qw
+$ curl -L https://github.com/andypangaribuan/qw-cli/releases/download/v1.0.3/qw-darwin-arm64 -o qw
 $ chmod +x qw
 $ mv qw /usr/local/bin
 ```
