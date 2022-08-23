@@ -6,15 +6,27 @@
  * licenses restricting copying, distribution and decompilation.
  */
 
+
 import 'package:dtg/dtg.dart';
 import 'package:qw_cli/qw_cli.dart';
 
 import 'docker.dart';
+import 'git.dart';
 import 'workbench.dart';
+
+class _CLI extends CLI {
+  _CLI(List<List<String>> helpCommands): super(helpCommands: helpCommands);
+
+  final docker = DockerCommand();
+  final git = GitCommand();
+  final workbench = WorkbenchCommand();
+}
+
 
 void main(List<String> arguments) {
   final c = _CLI([
     ['docker', '▶︎', 'image | ps'],
+    ['git', '▶︎', 'diff-branch'],
     ['workbench', '▶︎', 'psql-convert'],
   ]);
 
@@ -25,15 +37,10 @@ void main(List<String> arguments) {
     ['docker', c.docker.help],
     ['docker image', c.docker.image],
     ['docker ps', c.docker.ps],
+    ['git', c.git.help],
+    ['git diff-branch', c.git.diffBranch],
     ['workbench', c.workbench.help],
     ['workbench psql-convert', c.workbench.convert],
   ]
   ..run();
-}
-
-class _CLI extends CLI {
-  _CLI(List<List<String>> helpCommands): super(helpCommands: helpCommands);
-
-  final docker = DockerCommand();
-  final workbench = WorkbenchCommand();
 }
