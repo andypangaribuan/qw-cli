@@ -63,7 +63,7 @@ class DockerCommand {
           case 'IMAGE':
             if (!ar.opt('--full-image')) {
               final ls = value.split('/');
-              value = ls[ls.length-1];
+              value = ls[ls.length - 1];
             }
             break;
 
@@ -86,7 +86,7 @@ class DockerCommand {
                 port = port.replaceAll('/tcp', '');
                 port = port.replaceAll(':::', '');
                 port = port.replaceAll('0.0.0.0:', '');
-                
+
                 final ls = port.split('->');
                 if (ls.length == 1) {
                   if (!containerPorts.contains(port)) {
@@ -125,6 +125,18 @@ class DockerCommand {
         return value;
       },
     );
+
+    var tableLength = table.length;
+    if (containerName != '.' && tableLength > 1) {
+      for (int i = 1; i < tableLength; i++) {
+        final items = table[i];
+        if (!items[0].contains(containerName) && !items[1].contains(containerName)) {
+          table.removeAt(i);
+          i--;
+          tableLength--;
+        }
+      }
+    }
 
     dg.print.table(table, sort: (data) => data.sort(((a, b) => b[3].compareTo(a[3]))));
   }
