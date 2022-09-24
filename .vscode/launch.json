@@ -1,13 +1,13 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "qw-cli",
-            "request": "launch",
-            "type": "dart",
-            "program": "${workspaceFolder}/bin/main.dart",
-            "console": "debugConsole",
-            "args": ["docker", "ps"]
-        }
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "qw-cli",
+      "request": "launch",
+      "type": "dart",
+      "program": "${workspaceFolder}/bin/main.dart",
+      "console": "debugConsole",
+      "args": ["docker", "ps", "."]
+    }
+  ]
 }

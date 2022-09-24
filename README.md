@@ -31,6 +31,8 @@ $ dart bin/qw_cli.dart
 # build
 $ mkdir -p out
 $ dart compile exe bin/main.dart -o out/qw
+
+$ mv out/qw /usr/local/bin
 ```
 
 Using docker

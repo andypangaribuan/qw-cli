@@ -1,0 +1,8 @@
+// Extension: Code Spell Checker
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "dcli"
+  ]
+}

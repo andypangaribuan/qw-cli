@@ -11,7 +11,6 @@ import 'package:dtg/dtg.dart';
 import 'func.dart';
 
 class DockerCommand {
-
   final _infoPrintAll = 'Enter . to print all';
 
   void help(Args ar) {
@@ -46,26 +45,86 @@ class DockerCommand {
 
     final header = ['CONTAINER ID', 'IMAGE', 'COMMAND', 'CREATED', 'STATUS', 'PORTS', 'NAMES'];
     final display = ['IMAGE', 'NAMES', 'STATUS', 'PORTS'];
-    final table = await dg.sh.table(command: command, lsHeader: header, display: display, transformer: (index, header, value) {
-      if (index == 0) {
+    final table = await dg.sh.table(
+      command: command,
+      lsHeader: header,
+      display: display,
+      transformer: (index, header, value) {
+        // if (index == 0) {
+        //   switch (header) {
+        //     case 'IMAGE':
+        //       value += ' TAG';
+        //       break;
+        //   }
+        //   return value;
+        // }
+
         switch (header) {
           case 'IMAGE':
-            value += ' TAG';
+            if (!ar.opt('--full-image')) {
+              final ls = value.split('/');
+              value = ls[ls.length-1];
+            }
+            break;
+
+          case 'PORTS':
+            if (value.isNotEmpty && !ar.opt('--full-port')) {
+              var newValue = '';
+              void addNewValue(String v) {
+                if (newValue != '') {
+                  newValue += ', ';
+                }
+                newValue += v;
+              }
+
+              final containerPorts = <String>[];
+              final mappingPorts = <String, List<String>>{};
+              final ports = value.split(',');
+
+              for (var port in ports) {
+                port = port.trim();
+                port = port.replaceAll('/tcp', '');
+                port = port.replaceAll(':::', '');
+                port = port.replaceAll('0.0.0.0:', '');
+                
+                final ls = port.split('->');
+                if (ls.length == 1) {
+                  if (!containerPorts.contains(port)) {
+                    containerPorts.add(port);
+                  }
+                }
+                if (ls.length == 2) {
+                  final p = ls[0];
+                  final v = '${ls[0]}->${ls[1]}';
+                  var l = mappingPorts[p];
+                  l ??= [];
+                  if (!l.contains(v)) {
+                    l.add(v);
+                  }
+                  mappingPorts[p] = l;
+                }
+              }
+
+              for (var e in mappingPorts.entries) {
+                for (var v in e.value) {
+                  addNewValue(v);
+                }
+              }
+
+              for (var v in containerPorts) {
+                if (!mappingPorts.containsKey(v)) {
+                  addNewValue(v);
+                }
+              }
+
+              value += "";
+              value = newValue;
+            }
             break;
         }
         return value;
-      }
-
-      switch (header) {
-        case 'IMAGE':
-          final idx = value.indexOf(':');
-          if (idx > 0) {
-            value = value.substring(idx+1);
-          }
-          break;
-      }
-      return value;
-    },);
+      },
+    );
 
     dg.print.table(table, sort: (data) => data.sort(((a, b) => b[3].compareTo(a[3]))));
   }
