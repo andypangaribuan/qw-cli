@@ -9,6 +9,7 @@ build/
 # VSCode
 .vscode/*
 !.vscode/launch.json
+!.vscode/settings.json
 
 # Jetbrains IDE
 .idea/*

@@ -138,6 +138,44 @@ class DockerCommand {
       }
     }
 
-    dg.print.table(table, sort: (data) => data.sort(((a, b) => b[3].compareTo(a[3]))));
+    final upContainers = <List<String>>[];
+    final exitedContainers = <List<String>>[];
+
+    if (table.length > 1) {
+      final header = table[0];
+
+      for (var i = 1; i < table.length; i++) {
+        final v = table[i];
+        if (v[2].toLowerCase().substring(0, 2) == "up") {
+          upContainers.add(v);
+        } else {
+          exitedContainers.add(v);
+        }
+      }
+
+      upContainers.sort((a, b) => a[1].compareTo(b[1]));
+      exitedContainers.sort((a, b) => a[1].compareTo(b[1]));
+
+      var upSize = upContainers.length;
+      final upNotHavePorts = <List<String>>[];
+      for (var i=0; i<upSize; i++) {
+        final v = upContainers[i];
+        if (v[3].isEmpty) {
+          upNotHavePorts.add(v);
+          upContainers.removeAt(i);
+          i--;
+          upSize--;
+        }
+      }
+
+      table.clear();
+      table.add(header);
+      table.addAll(upContainers);
+      table.addAll(upNotHavePorts);
+      table.addAll(exitedContainers);
+    }
+
+    dg.print.table(table);
+    // dg.print.table(table, sort: (data) => data.sort(((a, b) => b[3].compareTo(a[3]))));
   }
 }
