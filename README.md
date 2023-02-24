@@ -38,30 +38,32 @@ $ mv out/qw /usr/local/bin
 Using docker
 
 ```shell
+# clone the project
 $ git clone https://github.com/andypangaribuan/qw-cli.git
-$ docker run --rm -it dart:2.17.6 bash
 
-# on host
-$ docker cp qw-cli {CONTAINER ID}:/qw-cli
+# build inside docker
+$ docker run --rm -v ./qw-cli:/qw-cli dart:2.17.6 bash -c '\
+  rm -rf /qw-cli/qw && \
+  cp -R /qw-cli /build-qw-cli && \
+  cd /build-qw-cli && \
+  dart pub get && \
+  mkdir -p out && \
+  dart compile exe bin/main.dart -o out/qw && \
+  cp out/qw /qw-cli/qw'
 
-# on container
-$ cd /qw-cli
-$ dart pub get
-$ mkdir -p out
-$ dart compile exe bin/main.dart -o out/qw
-
-# on host
-$ docker cp {CONTAINER ID}:/qw-cli/out/qw ~/qw
-$ mv ~/qw /usr/local/bin
+# move the qw file
+$ sudo mv ./qw-cli/qw /usr/local/bin
 ```
 
 ## Usage
 
 ```shell
+# access the command
 $ qw
 ```
 
 Features:
+
 - docker > image | ps
 - workbench > psql-convert
 
