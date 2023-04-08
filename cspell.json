@@ -1,8 +1,15 @@
 // Extension: Code Spell Checker
 {
-  "version": "0.2",
-  "language": "en",
-  "words": [
-    "dcli"
-  ]
+    "version": "0.2",
+    "language": "en",
+    "ignorePaths": [".taskfile"],
+    "dictionaryDefinitions": [
+      {
+        "name": "project",
+        "path": "./cspell-project.txt",
+        "addWords": true,
+        "scope": ["workspace"]
+      }
+    ],
+    "dictionaries": ["project"]
 }

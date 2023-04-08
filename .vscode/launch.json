@@ -7,7 +7,26 @@
       "type": "dart",
       "program": "${workspaceFolder}/bin/main.dart",
       "console": "debugConsole",
-      "args": ["docker", "ps", "."]
+      "args": [
+        "k8s",
+        "show-pods",
+        "-ns",
+        "central",
+        "-exclude",
+        "central-controller,controller",
+        "--no-name"
+      ]
+      // "args": [
+      //   "k8s",
+      //   "show-pods",
+      //   "-ns",
+      //   "central",
+      //   "-exclude",
+      //   "central-controller",
+      //   "--no-name",
+      //   "-order-by",
+      //   "created-at:asc"
+      // ]
     }
   ]
 }

@@ -18,6 +18,7 @@ include: package:lints/recommended.yaml
 linter:
   rules:
     depend_on_referenced_packages: false
+    library_private_types_in_public_api: false
 #     - camel_case_types
 
 # analyzer:

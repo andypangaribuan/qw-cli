@@ -12,6 +12,7 @@ Cross-platform enhanced CLI tools for your daily needs
 ## Installing
 
 ```shell
+# download the qw file
 $ curl -L https://github.com/andypangaribuan/qw-cli/releases/download/v1.0.3/qw-darwin-arm64 -o qw
 $ chmod +x qw
 $ mv qw /usr/local/bin
@@ -53,6 +54,8 @@ $ docker run --rm -v ./qw-cli:/qw-cli dart:2.17.6 bash -c '\
 
 # move the qw file
 $ sudo mv ./qw-cli/qw /usr/local/bin
+# move for everyone
+$ sudo mv ./qw-cli/qw /usr/bin
 ```
 
 ## Usage

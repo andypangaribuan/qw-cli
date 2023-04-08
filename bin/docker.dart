@@ -61,14 +61,14 @@ class DockerCommand {
 
         switch (header) {
           case 'IMAGE':
-            if (!ar.opt('--full-image')) {
+            if (!ar.haveOpt('--full-image')) {
               final ls = value.split('/');
               value = ls[ls.length - 1];
             }
             break;
 
           case 'PORTS':
-            if (value.isNotEmpty && !ar.opt('--full-port')) {
+            if (value.isNotEmpty && !ar.haveOpt('--full-port')) {
               var newValue = '';
               void addNewValue(String v) {
                 if (newValue != '') {

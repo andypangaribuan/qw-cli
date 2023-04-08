@@ -36,9 +36,9 @@ class WorkbenchCommand {
     lines = _beautifier(lines);
 
 
-    if (ar.opt('--drop-table')) {
+    if (ar.haveOpt('--drop-table')) {
       lines = _getDropTable(lines);
-      if (ar.opt('--save')) {
+      if (ar.haveOpt('--save')) {
         final savedFilepath = await _saveToFile(sqlFilePath, lines);
         print('saved file: $savedFilepath');
       } else {
@@ -47,7 +47,7 @@ class WorkbenchCommand {
       return;
     }
 
-    if (ar.opt('--save')) {
+    if (ar.haveOpt('--save')) {
       final savedFilepath = await _saveToFile(sqlFilePath, lines);
       print('saved file: $savedFilepath');
     } else {
