@@ -153,7 +153,7 @@ func execPodShow(app string, opt []string, opts [][]string) string {
 	)
 
 	hpaItems = append(hpaItems, []string{"", "NAME", "TARGETS", "MIN", "MAX", "REP", "AGE"})
-	podItems = append(podItems, []string{"", "NAME", "READY", "STATUS", "CPU", "MEM", "RET", "AGE", "IMGV"})
+	podItems = append(podItems, []string{"", "NAME", "READY", "STATUS", "CPU", "MEM", "RES", "AGE", "IMGV"})
 
 	for _, v := range hpaVals {
 		hpaItems = append(hpaItems, []string{
