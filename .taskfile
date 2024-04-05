@@ -28,20 +28,14 @@ function help {
 }
 
 
-#: run the project
-function run {
-  dart run bin/main.dart $@
-}
-
-#: compile the project (save to out/qw)
-function compile {
-  mkdir -p out
-  dart compile exe bin/main.dart -o out/qw
+#: build the project
+function build {
+  go build
 }
 
 #: move qw to /user/local/bin
-function move-qw {
-  mv out/qw /usr/local/bin
+function move {
+  mv qw /usr/local/bin
 }
 
 #: space

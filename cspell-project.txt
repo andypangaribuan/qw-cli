@@ -1,5 +1,8 @@
-dcli
-psql
-pubspec
-taskfile
-fdation
+gmod
+vals
+shof
+linkerd
+minpods
+maxpods
+imgv
+dval

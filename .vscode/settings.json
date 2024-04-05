@@ -1,15 +1,14 @@
 {
   "workbench.iconTheme": "material-icon-theme",
   "material-icon-theme.folders.associations": {
-    "aliases": "contract",
-    "dpages": "views",
-    "ext": "pipe",
-    "enums": "constant",
-    "background": "core",
-    "ui": "storybook",
-    "popup": "stack",
-    "var": "keys",
-    "net": "server"
+    "abs": "stack",
+    "act": "core",
+    "entity": "class",
+    "repo": "pipe",
+    "inmodel": "docs",
+    "resmodel": "meta",
+    "msg": "messages",
+    "files": "scripts"
   },
   "files.autoSave": "afterDelay",
   "debug.toolBarLocation": "docked",
@@ -24,39 +23,21 @@
   "errorLens.enabledDiagnosticLevels": ["error", "warning", "info"],
   "errorLens.severityText": ["ERROR", "WARNING", "INFO", "HINT"],
   "errorLens.messageBackgroundMode": "line",
-  "dart.lineLength": 120,
-  "[dart]": {
-    "editor.rulers": [120],
-    "editor.tabSize": 2,
-    "editor.insertSpaces": true,
-    "editor.detectIndentation": false,
-    "editor.suggest.insertMode": "replace",
-    "editor.defaultFormatter": "Dart-Code.dart-code"
-  },
   "editor.rulers": [120],
-  "[json]": {
-    "editor.tabSize": 2,
-    "editor.insertSpaces": true,
-    "editor.detectIndentation": false
-  },
+  "editor.foldingStrategy": "indentation",
   "fileHeaderComment.parameter": {
     "*": {
       "author": "Andy Pangaribuan",
+      "github": "https://github.com/apangaribuan",
       "license": [
         "Copyright (c) ${year}.",
-        " Created by ${author}. All Rights Reserved.",
-        "",
-        " This product is protected by copyright and distributed under",
-        " licenses restricting copying, distribution and decompilation."
+        " Created by ${author} <${github}>.",
+        " All Rights Reserved."
       ]
     }
   },
   "fileHeaderComment.template": {
-    "treasury": [
-      "${commentbegin}",
-      "${commentprefix} ${license}",
-      "${commentend}"
-    ]
+    "*": ["${commentbegin}", "${commentprefix} ${license}", "${commentend}"]
   },
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -69,5 +50,8 @@
   ],
   "merge-conflict.autoNavigateNextConflict.enabled": true,
   "merge-conflict.diffViewPosition": "Current",
-  "git.mergeEditor": true
+  "git.mergeEditor": true,
+  "go.testFlags": ["-v"],
+  "go.testEnvFile": "${workspaceFolder}/test/.env",
+  "terminal.integrated.scrollback": 1000000,
 }

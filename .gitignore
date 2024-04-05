@@ -1,27 +1,26 @@
-# Dart/Pub related
-**/doc/api/
-.dart_tool/
-.packages
-.pub-cache/
-.pub/
-build/
+# If you prefer the allow list template instead of the deny list, see community template:
+# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
+#
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
 
-# VSCode
-.vscode/*
-!.vscode/launch.json
-!.vscode/settings.json
+# Test binary, built with `go test -c`
+*.test
 
-# Jetbrains IDE
-.idea/*
-!.idea/dictionaries
-!.idea/copyright
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
 
-# Miscellaneous
+# Dependency directories (remove the comment below to include it)
+vendor/
+
+# Go workspace file
+go.work
+
+# miscellaneous
 .DS_Store
 
-# build
-out/
-
-# Directory created by dartdoc
-# If you don't generate documentation locally you can remove this line.
-doc/api/
+qw
