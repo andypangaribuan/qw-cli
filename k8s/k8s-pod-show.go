@@ -9,9 +9,11 @@ package k8s
 import (
 	"fmt"
 	"qw/util"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 )
 
 func podShow(args []string) {
@@ -97,7 +99,7 @@ func execPodShow(app string, opt []string, opts [][]string) string {
 
 	wg.Add(1)
 	go func() {
-		imgOut, imgErr = cmd(shof(opt, opts, "kubectl get pods -o custom-columns='NAME:.metadata.name,IMAGES:.spec.containers[*].image' -l app=%v", app))
+		imgOut, imgErr = cmd(shof(opt, opts, "kubectl get pods -o custom-columns='NAME:.metadata.name,IMAGES:.spec.containers[*].image,CREATION:.metadata.creationTimestamp' -l app=%v", app))
 		wg.Done()
 	}()
 
@@ -126,11 +128,12 @@ func execPodShow(app string, opt []string, opts [][]string) string {
 	hpaHeader, hpaVals := util.MapKV(hpaOut, "NAME", "REFERENCE", "TARGETS", "MINPODS", "MAXPODS", "REPLICAS", "AGE")
 	podHeader, podVals := util.MapKV(podOut, "NAME", "READY", "STATUS", "RESTARTS", "AGE")
 	topHeader, topVals := util.MapKV(topOut, "NAME", "CPU(cores)", "MEMORY(bytes)")
-	imgHeader, imgVals := util.MapKV(imgOut, "NAME", "IMAGES")
+	imgHeader, imgVals := util.MapKV(imgOut, "NAME", "IMAGES", "CREATION")
 
 	var (
 		hpaItems     = make([][]string, 0)
 		podItems     = make([][]string, 0)
+		podCreations = make([][]any, 0)
 		numberLength = len(strconv.Itoa(len(podVals)))
 
 		idxHpaName     = hpaHeader["NAME"]
@@ -149,7 +152,8 @@ func execPodShow(app string, opt []string, opts [][]string) string {
 		idxTopCpu = topHeader["CPU(cores)"]
 		idxTopMem = topHeader["MEMORY(bytes)"]
 
-		idxImgImages = imgHeader["IMAGES"]
+		idxImgImages   = imgHeader["IMAGES"]
+		idxImgCreation = imgHeader["CREATION"]
 	)
 
 	hpaItems = append(hpaItems, []string{"", "NAME", "TARGETS", "MIN", "MAX", "REP", "AGE"})
@@ -169,16 +173,17 @@ func execPodShow(app string, opt []string, opts [][]string) string {
 
 	for i, pod := range podVals {
 		var (
-			top        = getVal(topHeader, topVals, "NAME", pod[idxPodName])
-			img        = getVal(imgHeader, imgVals, "NAME", pod[idxPodName])
-			cpu        = "-"
-			mem        = "-"
-			imgVersion = ""
+			top         = getVal(topHeader, topVals, "NAME", pod[idxPodName])
+			img         = getVal(imgHeader, imgVals, "NAME", pod[idxPodName])
+			cpu         = "-"
+			mem         = "-"
+			imgVersion  = "-"
+			imgCreation = time.Now()
 		)
 
 		if len(top) > 0 {
-			cpu = top[idxTopMem]
-			mem = top[idxTopCpu]
+			cpu = top[idxTopCpu]
+			mem = top[idxTopMem]
 		}
 
 		if len(img) > 0 {
@@ -198,6 +203,11 @@ func execPodShow(app string, opt []string, opts [][]string) string {
 
 			ls = strings.Split(imgVersion, ":")
 			imgVersion = ls[len(ls)-1]
+
+			creation, err := time.Parse("2006-01-02T15:04:05Z07:00", img[idxImgCreation])
+			if err == nil {
+				imgCreation = creation
+			}
 		}
 
 		podItems = append(podItems, []string{
@@ -211,6 +221,23 @@ func execPodShow(app string, opt []string, opts [][]string) string {
 			pod[idxPodAge],
 			imgVersion,
 		})
+
+		podCreations = append(podCreations, []any{i + 1, imgCreation})
+	}
+
+	sort.SliceStable(podCreations, func(i, j int) bool {
+		x := podCreations[i][1].(time.Time)
+		y := podCreations[j][1].(time.Time)
+		return x.After(y)
+	})
+
+	temp := podItems
+	podItems = [][]string{temp[0]}
+	for i, v := range podCreations {
+		index := v[0].(int)
+		items := temp[index]
+		items[0] = util.AddSpace(strconv.Itoa(i+1), numberLength, true)
+		podItems = append(podItems, items)
 	}
 
 	return util.BuildLines(hpaItems) + "\n\n" + util.BuildLines(podItems)
