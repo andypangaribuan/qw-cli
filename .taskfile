@@ -35,7 +35,10 @@ function build {
 
 #: move qw to /user/local/bin
 function move {
-  mv qw /usr/local/bin
+  rm -rf qwx
+  rm -rf /usr/local/bin/qwx
+  cp qw qwx
+  sudo mv qwx /usr/local/bin/qwx
 }
 
 #: space

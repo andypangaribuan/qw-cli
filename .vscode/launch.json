@@ -10,7 +10,8 @@
       "request": "launch",
       "mode": "debug",
       "program": "main.go",
-      "args": ["k8s", "pod", "show", "-n=central", "central-log", "connect-api"]
+      // "args": ["k8s", "pod", "show", "-n=central", "central-log", "connect-api"]
+      "args": ["k8s", "pod", "show", "-n=ns-ark", "clog"]
     }
   ]
 }
