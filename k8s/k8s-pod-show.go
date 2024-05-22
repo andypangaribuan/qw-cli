@@ -72,8 +72,9 @@ func podShow(args []string) {
 
 func execPodShow(app string, opt []string, opts [][]string) string {
 	var (
-		wg             sync.WaitGroup
-		hpaOut, hpaErr string
+		wg sync.WaitGroup
+		// hpaOut, hpaErr string
+		hpaOut         string
 		podOut, podErr string
 		topOut, topErr string
 		imgOut, imgErr string
@@ -81,7 +82,8 @@ func execPodShow(app string, opt []string, opts [][]string) string {
 
 	wg.Add(1)
 	go func() {
-		hpaOut, hpaErr = cmd(shof(opt, opts, "kubectl get hpa %v", app))
+		// hpaOut, hpaErr = cmd(shof(opt, opts, "kubectl get hpa %v", app))
+		hpaOut, _ = cmd(shof(opt, opts, "kubectl get hpa %v", app))
 		wg.Done()
 	}()
 
@@ -105,10 +107,10 @@ func execPodShow(app string, opt []string, opts [][]string) string {
 
 	wg.Wait()
 
-	if hpaErr != "" {
-		printCmdError(app, hpaErr)
-		return ""
-	}
+	// if hpaErr != "" {
+	// 	printCmdError(app, hpaErr)
+	// 	return ""
+	// }
 
 	if podErr != "" {
 		printCmdError(app, podErr)
@@ -240,6 +242,10 @@ func execPodShow(app string, opt []string, opts [][]string) string {
 		podItems = append(podItems, items)
 	}
 
+	if len(hpaItems) == 1 {
+		return util.BuildLines(podItems)
+	}
+	
 	return util.BuildLines(hpaItems) + "\n\n" + util.BuildLines(podItems)
 }
 

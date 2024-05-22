@@ -30,14 +30,15 @@ function help {
 
 #: build the project
 function build {
+  rm -rf qw
   go build
 }
 
-#: move qw to /user/local/bin
+#: move qw to /user/local/bin/qwx
 function move {
   rm -rf qwx
-  rm -rf /usr/local/bin/qwx
-  cp qw qwx
+  mv qw qwx
+  sudo rm -rf /usr/local/bin/qwx
   sudo mv qwx /usr/local/bin/qwx
 }
 

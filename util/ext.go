@@ -123,25 +123,27 @@ func MapKV(val string, headerNames ...string) (map[string]int, [][]string) {
 	)
 
 	lines := strings.Split(val, "\n")
-	for i, line := range lines {
-		if i == 0 {
-			indexes = getHeaderIndex(line, headerNames)
-			for i, h := range headerNames {
-				header[h] = i
-			}
-		} else {
-			values := make([]string, 0)
-			for _, h := range headerNames {
-				idx := indexes[h]
-				v := ""
-				if len(idx) == 1 {
-					v = line[idx[0]:]
-				} else {
-					v = line[idx[0]:idx[1]]
+	if val != "" {
+		for i, line := range lines {
+			if i == 0 {
+				indexes = getHeaderIndex(line, headerNames)
+				for i, h := range headerNames {
+					header[h] = i
 				}
-				values = append(values, strings.TrimSpace(v))
+			} else {
+				values := make([]string, 0)
+				for _, h := range headerNames {
+					idx := indexes[h]
+					v := ""
+					if len(idx) == 1 {
+						v = line[idx[0]:]
+					} else {
+						v = line[idx[0]:idx[1]]
+					}
+					values = append(values, strings.TrimSpace(v))
+				}
+				vals = append(vals, values)
 			}
-			vals = append(vals, values)
 		}
 	}
 
