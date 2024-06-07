@@ -107,11 +107,6 @@ func execPodShow(app string, opt []string, opts [][]string) string {
 
 	wg.Wait()
 
-	// if hpaErr != "" {
-	// 	printCmdError(app, hpaErr)
-	// 	return ""
-	// }
-
 	if podErr != "" {
 		printCmdError(app, podErr)
 		return ""
@@ -245,7 +240,7 @@ func execPodShow(app string, opt []string, opts [][]string) string {
 	if len(hpaItems) == 1 {
 		return util.BuildLines(podItems)
 	}
-	
+
 	return util.BuildLines(hpaItems) + "\n\n" + util.BuildLines(podItems)
 }
 

@@ -11,7 +11,8 @@
       "mode": "debug",
       "program": "main.go",
       // "args": ["k8s", "pod", "show", "-n=central", "central-log", "connect-api"]
-      "args": ["k8s", "pod", "show", "-n=ns-cron", "asset-cron"]
+      // "args": ["k8s", "pod", "show", "-n=ns-cron", "asset-cron"]
+      "args": ["k8s"]
     }
   ]
 }

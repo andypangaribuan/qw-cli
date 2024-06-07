@@ -6,9 +6,16 @@
 
 package k8s
 
+import "fmt"
+
 func K8S(args []string) {
+	commands := `
+available command:
+- pod : show pod access
+	`
+
 	if len(args) == 0 {
-		invalid()
+		fmt.Printf("invalid command\n%v\n", commands)
 		return
 	}
 
@@ -17,7 +24,7 @@ func K8S(args []string) {
 		pod(args[1:])
 
 	default:
-		invalid()
+		fmt.Printf("invalid command\n%v\n", commands)
 		return
 	}
 }

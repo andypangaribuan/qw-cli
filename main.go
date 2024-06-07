@@ -16,6 +16,11 @@ import (
 )
 
 func main() {
+	const commands = `
+available commands:
+- k8s : kubernetes client
+`
+
 	args := os.Args
 	if len(args) > 0 {
 		args = args[1:]
@@ -26,7 +31,7 @@ func main() {
 	}
 
 	if len(args) == 0 {
-		mainInvalid()
+		fmt.Printf("invalid command\n%v\n", commands)
 		return
 	}
 
@@ -35,11 +40,7 @@ func main() {
 		k8s.K8S(args[1:])
 
 	default:
-		mainInvalid()
+		fmt.Printf("invalid command\n%v\n", commands)
 		return
 	}
-}
-
-func mainInvalid() {
-	fmt.Printf("unknown command\n")
 }
