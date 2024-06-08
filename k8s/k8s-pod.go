@@ -10,7 +10,7 @@ import "qw/util"
 
 func pod(args []string) {
 	util.ToPath(args, `
-		- show : show all container, opts: -n={namespace}`,
+		- show : show all container, value: {deployment-name} {deployment-name} ..., opts: -n={namespace}`,
 		map[string]func(args []string){
 			"show": podShow,
 		})

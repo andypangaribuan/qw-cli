@@ -18,13 +18,13 @@ import (
 
 func podShow(args []string) {
 	if len(args) == 0 {
-		invalid()
+		util.PrintInvalidCommand()
 		return
 	}
 
 	val, opt, opts, _, exts := vo(args)
 	if len(val) == 0 {
-		invalid()
+		util.PrintInvalidCommand()
 		return
 	}
 

@@ -41,6 +41,10 @@ func ToPath(args []string, availableCommands string, path map[string]func(args [
 	}
 }
 
+func PrintInvalidCommand() {
+	fmt.Printf("invalid command\n")
+}
+
 func GetFirstOrEmpty(args []string) string {
 	if len(args) == 0 {
 		return ""
