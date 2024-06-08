@@ -6,18 +6,12 @@
 
 package k8s
 
+import "qw/util"
+
 func pod(args []string) {
-	if len(args) == 0 {
-		invalid()
-		return
-	}
-
-	switch args[0] {
-	case "show":
-		podShow(args[1:])
-
-	default:
-		invalid()
-		return
-	}
+	util.ToPath(args, `
+		- show : show all container, opts: -n={namespace}`,
+		map[string]func(args []string){
+			"show": podShow,
+		})
 }

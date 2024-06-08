@@ -16,6 +16,39 @@ import (
 	"github.com/andypangaribuan/gmod/fm"
 )
 
+func ToPath(args []string, availableCommands string, path map[string]func(args []string)) {
+	ls := strings.Split(strings.TrimSpace(availableCommands), "\n")
+	availableCommands = ""
+
+	for i, v := range ls {
+		if i != 0 {
+			availableCommands += "\n"
+		}
+
+		availableCommands += strings.TrimSpace(v)
+	}
+
+	if len(args) == 0 {
+		fmt.Printf("invalid command\n\navailable commands:\n%v\n", availableCommands)
+		return
+	}
+
+	fn, ok := path[args[0]]
+	if ok {
+		fn(args[1:])
+	} else {
+		fmt.Printf("invalid command\n%v\n", availableCommands)
+	}
+}
+
+func GetFirstOrEmpty(args []string) string {
+	if len(args) == 0 {
+		return ""
+	}
+
+	return args[0]
+}
+
 func CMD(sh string, loadEnv ...bool) (string, string) {
 	if len(loadEnv) > 0 && loadEnv[0] {
 		sh = "set -a; source ~/.zshrc; set +a; " + sh
