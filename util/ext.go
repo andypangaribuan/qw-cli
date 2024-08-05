@@ -209,8 +209,8 @@ func getHeaderIndex(line string, headers []string) map[string][]int {
 	var (
 		length    = len(headers)
 		indexes   = make(map[string][]int, 0)
-		idx       = 0
-		nx        = 0
+		idx       int
+		nx        int
 		prevCount = 0
 	)
 

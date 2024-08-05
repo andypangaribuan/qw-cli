@@ -28,6 +28,15 @@ function help {
 }
 
 
+#: update + check
+function run {
+  go mod tidy
+  go vet
+  gofmt -l .
+  golangci-lint run
+  staticcheck ./...
+}
+
 #: build the project
 function build {
   rm -rf qw

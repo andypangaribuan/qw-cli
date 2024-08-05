@@ -84,18 +84,21 @@ func execPodShow(app string, opt []string, opts [][]string) string {
 	go func() {
 		// hpaOut, hpaErr = cmd(shof(opt, opts, "kubectl get hpa %v", app))
 		hpaOut, _ = cmd(shof(opt, opts, "kubectl get hpa %v", app))
+		hpaOut = strings.ReplaceAll(hpaOut, "<unknown>", "        -")
 		wg.Done()
 	}()
 
 	wg.Add(1)
 	go func() {
 		podOut, podErr = cmd(shof(opt, opts, "kubectl get pod -l app=%v", app))
+		podOut = strings.ReplaceAll(podOut, "PodInitializing", "Init           ")
 		wg.Done()
 	}()
 
 	wg.Add(1)
 	go func() {
-		topOut, topErr = cmd(shof(opt, opts, "kubectl top pod -l app=%v", app))
+		// topOut, topErr = cmd(shof(opt, opts, "kubectl top pod -l app=%v", app))
+		topOut, _ = cmd(shof(opt, opts, "kubectl top pod -l app=%v", app))
 		wg.Done()
 	}()
 
@@ -157,10 +160,20 @@ func execPodShow(app string, opt []string, opts [][]string) string {
 	podItems = append(podItems, []string{"", "NAME", "READY", "STATUS", "CPU", "MEM", "RES", "AGE", "IMGV"})
 
 	for _, v := range hpaVals {
+		targets := v[idxHpaTargets]
+
+		for {
+			if !strings.Contains(targets, "  ") {
+				break
+			}
+
+			targets = strings.ReplaceAll(targets, "  ", " ")
+		}
+
 		hpaItems = append(hpaItems, []string{
 			util.AddSpace("", numberLength, true),
 			v[idxHpaName],
-			v[idxHpaTargets],
+			targets,
 			v[idxHpaMinPods],
 			v[idxHpaMaxPods],
 			v[idxHpaReplicas],
