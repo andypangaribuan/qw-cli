@@ -20,8 +20,8 @@ func podEvents(args []string) {
 	}
 
 	var (
-		optNs     = ""
-		optDep    = ""
+		optNs  = ""
+		optDep = ""
 		optPod = ""
 	)
 
@@ -102,8 +102,12 @@ func podEvents(args []string) {
 
 				for _, line := range lines {
 					if foundEvents {
-						eventValue += "\n" + line
-						continue
+						if len(line) > 2 && line[:2] == "  " {
+							eventValue += "\n" + line
+							continue
+						} else {
+							break
+						}
 					}
 
 					if strings.Contains(line, eventKey) {
