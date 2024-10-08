@@ -13,7 +13,9 @@
       // "args": ["k8s", "pod", "show", "-n=central", "central-log", "connect-api"]
       // "args": ["k8s", "pod", "show", "-n=ns-cron", "asset-cron"]
       // "args": ["k8s", "pod", "show", "-n=central", "central-log"]
-      "args": ["k8s", "pod", "show", "-n=ns-stg", "notification-service"]
+      // "args": ["k8s", "pod", "show", "-n=ns-stg", "notification-service"]
+      "args": ["k8s", "pod", "events", "-n=ns-ark", "-d=clog"]
+      // "args": ["k8s", "pod", "events", "-n=ns-ark", "-d=clog", "-p=clog-f58d8d9f6-mnqlg"]
     }
   ]
 }
