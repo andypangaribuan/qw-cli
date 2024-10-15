@@ -1,43 +1,23 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
   name: xcurl
-  namespace: $KYML_NAMESPACE
 spec:
-  replicas: $KYML_POD_REPLICA
-  revisionHistoryLimit: 10
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 30%
-      maxSurge: 40%
-  selector:
-    matchLabels:
-      app: xcurl
-  template:
-    metadata:
-      labels:
-        app: xcurl
-    spec:
-      terminationGracePeriodSeconds: 60
-      containers:
-        - name: xcurl
-          image: radial/busyboxplus:curl
-          imagePullPolicy: Always
-          envFrom:
-            - secretRef:
-                name: xcurl
-          resources:
-            requests:
-              cpu: 50
-              memory: 100
-              ephemeral-storage: 50
-            limits:
-              memory: 100
-              ephemeral-storage: 50
-          securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            runAsNonRoot: true
-            runAsUser: 1000
-            runAsGroup: 1000
+  containers:
+    - name: xcurl
+      image: radial/busyboxplus:curl
+      imagePullPolicy: Always
+      resources:
+        requests:
+          cpu: 50
+          memory: 100
+          ephemeral-storage: 50
+        limits:
+          memory: 100
+          ephemeral-storage: 50
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
